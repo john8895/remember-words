@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <textarea cols="30" rows="10" v-model="words">
+    </textarea>
+    <br>
+    <button @click="foo">Button</button>
+
+    <h1>{{words}}</h1>
+</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+    const {ref} = Vue;
+    const App = {
+        setup: function () {
+            const words = ref(`When PHP parses a file, it looks for opening and closing tags, which are <?php and ?> which tell PHP to start and stop interpreting the code between them. Parsing in this manner allows PHP to be embedded in all sorts of different documents, as everything outside of a pair of opening and closing tags is ignored by the PHP parser.
+PHP includes a short echo tag
+            `);
+
+            function foo() {
+                const inputWords = words.value.split(' ')
+                const allWords = inputWords.filter(el => el !== '')
+                console.log('allWords: ', allWords)
+                const keyWords = ['a', 'are', 'all', 'is', 'in', 'by', 'it', 'of', 'and', 'to', 'be']
+                // find
+                for (let i = 0; i < allWords.length; i++) {
+                    keyWords.forEach(el => {
+                        if (allWords.indexOf(el) !== -1) {
+                            const position = allWords.indexOf(el)
+                            allWords.splice(position, 1)
+                        }
+                    })
+                }
+            }
+
+            return {
+                words,
+                foo,
+            }
+        }
+    }
+    Vue.createApp(App).mount('#app')
+</script>
+</body>
+</html>
